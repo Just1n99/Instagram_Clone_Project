@@ -10,7 +10,7 @@ import RegisterScreen from './components/auth/Register'
 import LoginScreen from './components/auth/Login'
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import {initializeAuth, onAuthStateChanged, getReactNativePersistence} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
 import {getStorage} from 'firebase/storage'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,9 +36,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app, {
-  persistence: 'local',
-  dataLayer: AsyncStorage,
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage)
 });
 const firestore = getFirestore(app);
 const storage = getStorage(app);
